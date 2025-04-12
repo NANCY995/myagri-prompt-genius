@@ -1,7 +1,7 @@
 
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Plant, ShoppingBag } from "lucide-react";
+import { Sprout, ShoppingBag } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function UserTypePage() {
@@ -21,7 +21,7 @@ export default function UserTypePage() {
               <Card className="hover:border-agri-green/50 transition-all cursor-pointer">
                 <CardContent className="flex items-center p-6">
                   <div className="mr-6 bg-agri-green/10 p-3 rounded-full">
-                    <Plant className="h-8 w-8 text-agri-green" />
+                    <Sprout className="h-8 w-8 text-agri-green" />
                   </div>
                   <div className="flex-1">
                     <h3 className="font-semibold text-lg mb-1">Agriculteur</h3>
