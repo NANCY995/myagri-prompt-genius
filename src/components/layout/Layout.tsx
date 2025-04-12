@@ -1,11 +1,29 @@
 
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 
 export default function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const navigate = useNavigate();
+  
+  // Simulation d'une vérification d'authentification simplifiée
+  // Dans une application réelle, vous utiliseriez un système d'auth complet
+  useEffect(() => {
+    // Cette vérification est simpliste à des fins de démonstration
+    // Normalement vous utiliseriez un token JWT ou une session
+    const isLoggedIn = localStorage.getItem("myagri_user");
+    
+    if (!isLoggedIn) {
+      // Pour faciliter la démo, on crée un utilisateur fictif
+      // Dans une vraie app, on redirigerait vers la page de login
+      localStorage.setItem("myagri_user", JSON.stringify({
+        name: "Utilisateur Démo",
+        email: "demo@myagri.com"
+      }));
+    }
+  }, [navigate]);
   
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);

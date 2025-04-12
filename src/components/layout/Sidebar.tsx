@@ -11,7 +11,7 @@ interface SidebarProps {
 
 export default function Sidebar({ isOpen }: SidebarProps) {
   const navItems = [
-    { label: "Accueil", icon: <Home size={18} />, path: "/" },
+    { label: "Accueil", icon: <Home size={18} />, path: "/home" },
     { label: "Démarrer une analyse", icon: <Leaf size={18} />, path: "/analyse" },
     { label: "Simulation", icon: <BarChart3 size={18} />, path: "/simulation" },
     { label: "Agri Actu", icon: <Newspaper size={18} />, path: "/actualites" },
