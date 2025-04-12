@@ -11,17 +11,17 @@ export default function WelcomePage() {
     {
       title: "Bienvenue sur MyAgri",
       description: "Votre assistant intelligent pour l'agriculture de précision",
-      image: "/lovable-uploads/264325d2-a233-4c2d-b12b-5dd545e77d45.png"
+      image: ""
     },
     {
       title: "Analyse d'images avancée",
       description: "Identifiez rapidement les maladies et parasites de vos cultures",
-      image: "/lovable-uploads/4aaffc34-5f39-41cd-9190-d8ae69529016.png"
+      image: ""
     },
     {
       title: "Base de données complète",
       description: "Accédez à des datasets de référence et personnalisez vos analyses",
-      image: "/lovable-uploads/162652a7-8ea6-400e-93f4-8e4bb7ae9042.png"
+      image: ""
     }
   ];
   
@@ -55,11 +55,6 @@ export default function WelcomePage() {
                 }`}
               >
                 <div className="flex flex-col items-center text-center">
-                  <img 
-                    src={slide.image} 
-                    alt={slide.title} 
-                    className="h-40 w-auto mb-4 rounded-lg object-cover"
-                  />
                   <h2 className="text-xl font-semibold mb-2">{slide.title}</h2>
                   <p className="text-muted-foreground">{slide.description}</p>
                 </div>

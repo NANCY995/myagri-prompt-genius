@@ -1,7 +1,7 @@
 
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Sprout, ShoppingBag } from "lucide-react";
+import { Sprout, ShoppingBag, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function UserTypePage() {
@@ -17,7 +17,7 @@ export default function UserTypePage() {
           </div>
           
           <div className="space-y-6">
-            <Link to="/login">
+            <Link to="/register">
               <Card className="hover:border-agri-green/50 transition-all cursor-pointer">
                 <CardContent className="flex items-center p-6">
                   <div className="mr-6 bg-agri-green/10 p-3 rounded-full">
@@ -33,7 +33,7 @@ export default function UserTypePage() {
               </Card>
             </Link>
             
-            <Link to="/login">
+            <Link to="/register">
               <Card className="hover:border-agri-green/50 transition-all cursor-pointer">
                 <CardContent className="flex items-center p-6">
                   <div className="mr-6 bg-agri-green/10 p-3 rounded-full">
@@ -51,9 +51,9 @@ export default function UserTypePage() {
           </div>
           
           <div className="mt-8 text-center">
-            <Link to="/">
-              <Button variant="ghost" className="text-muted-foreground">
-                Retour
+            <Link to="/register">
+              <Button className="bg-agri-green hover:bg-agri-darkGreen text-white">
+                Commencer <ArrowRight className="ml-1 h-4 w-4" />
               </Button>
             </Link>
           </div>

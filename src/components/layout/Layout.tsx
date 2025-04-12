@@ -16,12 +16,9 @@ export default function Layout() {
     const isLoggedIn = localStorage.getItem("myagri_user");
     
     if (!isLoggedIn) {
-      // Pour faciliter la démo, on crée un utilisateur fictif
-      // Dans une vraie app, on redirigerait vers la page de login
-      localStorage.setItem("myagri_user", JSON.stringify({
-        name: "Utilisateur Démo",
-        email: "demo@myagri.com"
-      }));
+      // Redirection vers la page de connexion si l'utilisateur n'est pas connecté
+      navigate("/login");
+      return;
     }
   }, [navigate]);
   
