@@ -1,6 +1,5 @@
-
 import { useState } from "react";
-import { Search, ChevronRight, MessageSquare, FileText, HelpCircle, VideoIcon, Bookmark, ExternalLink } from "lucide-react";
+import { Search, ChevronRight, MessageSquare, FileText, HelpCircle, VideoIcon, Bookmark, ExternalLink, Send, Bot, PanelRightClose, RotateCcw, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -10,10 +9,18 @@ import { Badge } from "@/components/ui/badge";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/components/ui/use-toast";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function AidePage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
+  const [chatbotOpen, setChatbotOpen] = useState(false);
+  const [chatMessage, setChatMessage] = useState("");
+  const [chatHistory, setChatHistory] = useState<{message: string; isBot: boolean}[]>([
+    {message: "Bonjour ! Comment puis-je vous aider aujourd'hui ?", isBot: true}
+  ]);
+  const [showPopularQuestions, setShowPopularQuestions] = useState(true);
   
   // Questions fréquentes
   const faqs = [
@@ -95,7 +102,7 @@ export default function AidePage() {
     },
     {
       id: "4",
-      title: "Tutoriel vidéo : Utiliser l'outil de simulation",
+4 title: "Tutoriel vidéo : Utiliser l'outil de simulation",
       description: "Apprenez à tirer le meilleur parti de l'outil de simulation de MyAgri.",
       type: "video",
       icon: <VideoIcon className="h-5 w-5" />,
@@ -117,6 +124,14 @@ export default function AidePage() {
       icon: <FileText className="h-5 w-5" />,
       url: "#",
     },
+  ];
+  
+  // Questions populaires pour le chatbot
+  const popularQuestions = [
+    "Comment analyser une nouvelle culture ?",
+    "Comment exporter mes données ?",
+    "Comment modifier mes paramètres de profil ?",
+    "Qu'est-ce que l'indice de santé végétale ?"
   ];
   
   // Filtrer les FAQs en fonction de la recherche et de la catégorie
@@ -143,6 +158,40 @@ export default function AidePage() {
       title: "Question envoyée",
       description: "Nous avons reçu votre question et vous répondrons dans les meilleurs délais.",
     });
+  };
+
+  // Fonction pour envoyer un message au chatbot
+  const handleSendChatMessage = () => {
+    if (!chatMessage.trim()) return;
+    
+    // Ajouter le message de l'utilisateur à l'historique
+    setChatHistory([...chatHistory, {message: chatMessage, isBot: false}]);
+    
+    // Simuler une réponse du bot
+    setTimeout(() => {
+      let botResponse;
+      
+      if (chatMessage.toLowerCase().includes("analyse")) {
+        botResponse = "Pour analyser une image, rendez-vous sur la page 'Analyse' et cliquez sur 'Nouvelle analyse'. Vous pourrez ensuite télécharger une photo de votre culture pour obtenir un diagnostic.";
+      } else if (chatMessage.toLowerCase().includes("compte") || chatMessage.toLowerCase().includes("profil")) {
+        botResponse = "Vous pouvez gérer votre profil dans la section 'Paramètres'. Vous y trouverez les options pour modifier vos informations personnelles et les détails de votre exploitation.";
+      } else if (chatMessage.toLowerCase().includes("simulation")) {
+        botResponse = "L'outil de simulation vous permet de visualiser l'évolution de vos cultures sur une période définie. Accédez-y via le menu 'Simulation' et ajustez les paramètres selon vos besoins.";
+      } else {
+        botResponse = "Merci pour votre question. Je vous invite à consulter notre FAQ ou à contacter notre support technique pour obtenir une réponse plus détaillée.";
+      }
+      
+      setChatHistory(prev => [...prev, {message: botResponse, isBot: true}]);
+      setShowPopularQuestions(false);
+    }, 1000);
+    
+    setChatMessage("");
+  };
+
+  // Fonction pour sélectionner une question populaire
+  const handleSelectPopularQuestion = (question: string) => {
+    setChatMessage(question);
+    handleSendChatMessage();
   };
   
   return (
@@ -356,6 +405,16 @@ export default function AidePage() {
                   className="w-full min-h-32 p-3 border rounded-md border-input bg-background text-sm"
                 />
               </div>
+
+              <div className="flex items-center space-x-2">
+                <Checkbox id="terms" />
+                <label
+                  htmlFor="terms"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  J'accepte de recevoir des emails concernant ma demande
+                </label>
+              </div>
             </CardContent>
             <CardFooter className="flex justify-between">
               <Button variant="outline">Annuler</Button>
@@ -381,7 +440,7 @@ export default function AidePage() {
                   </p>
                 </CardContent>
                 <CardFooter>
-                  <Button variant="outline" className="w-full">
+                  <Button variant="outline" className="w-full" onClick={() => setChatbotOpen(true)}>
                     <MessageSquare className="mr-2 h-4 w-4" /> Démarrer un chat
                   </Button>
                 </CardFooter>
@@ -466,6 +525,89 @@ export default function AidePage() {
           </Button>
         </CardContent>
       </Card>
+
+      {/* Chatbot flottant */}
+      {!chatbotOpen && (
+        <Button 
+          className="fixed bottom-6 right-6 rounded-full h-14 w-14 shadow-lg bg-agri-green hover:bg-agri-darkGreen"
+          onClick={() => setChatbotOpen(true)}
+        >
+          <MessageSquare className="h-6 w-6" />
+        </Button>
+      )}
+
+      {/* Fenêtre de chat */}
+      {chatbotOpen && (
+        <div className="fixed bottom-6 right-6 w-80 md:w-96 bg-white rounded-lg shadow-xl border overflow-hidden z-50 flex flex-col transition-all duration-300 ease-in-out">
+          <div className="bg-agri-green text-white p-3 flex items-center justify-between">
+            <div className="flex items-center">
+              <Bot className="mr-2 h-5 w-5" />
+              <span className="font-medium">Assistant MyAgri</span>
+            </div>
+            <div className="flex items-center space-x-1">
+              <Button variant="ghost" size="icon" className="text-white h-7 w-7 hover:bg-agri-darkGreen" onClick={() => setChatbotOpen(false)}>
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+          
+          <div className="flex-1 p-4 max-h-96 overflow-y-auto flex flex-col space-y-4" style={{ minHeight: '300px' }}>
+            {chatHistory.map((chat, index) => (
+              <div 
+                key={index}
+                className={`flex ${chat.isBot ? 'justify-start' : 'justify-end'}`}
+              >
+                <div 
+                  className={`rounded-lg py-2 px-3 max-w-[80%] ${
+                    chat.isBot 
+                      ? 'bg-muted text-foreground' 
+                      : 'bg-agri-green text-white'
+                  }`}
+                >
+                  {chat.message}
+                </div>
+              </div>
+            ))}
+
+            {showPopularQuestions && (
+              <div className="mt-4">
+                <div className="text-sm text-muted-foreground mb-2">Questions fréquentes :</div>
+                <div className="flex flex-col space-y-2">
+                  {popularQuestions.map((question, index) => (
+                    <Button 
+                      key={index} 
+                      variant="outline" 
+                      className="justify-start text-left text-sm h-auto py-2"
+                      onClick={() => handleSelectPopularQuestion(question)}
+                    >
+                      {question}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+          
+          <div className="p-3 border-t">
+            <div className="flex">
+              <Input
+                placeholder="Tapez votre message..."
+                value={chatMessage}
+                onChange={(e) => setChatMessage(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleSendChatMessage()}
+                className="rounded-r-none"
+              />
+              <Button className="rounded-l-none bg-agri-green hover:bg-agri-darkGreen" onClick={handleSendChatMessage}>
+                <Send className="h-4 w-4" />
+              </Button>
+            </div>
+            <div className="text-xs text-muted-foreground mt-2 flex items-center">
+              <RotateCcw className="h-3 w-3 mr-1" />
+              <span>Vous pouvez redémarrer la conversation en rafraîchissant la page</span>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
