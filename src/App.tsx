@@ -14,6 +14,9 @@ import UserTypePage from "./pages/UserTypePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import OtpLoginPage from "./pages/OtpLoginPage";
+import ActivitesPage from "./pages/ActivitesPage";
+import ParametresPage from "./pages/ParametresPage";
+import AidePage from "./pages/AidePage";
 
 const queryClient = new QueryClient();
 
@@ -36,9 +39,9 @@ const App = () => (
             <Route path="/home" element={<Index />} />
             <Route path="/analyse" element={<AnalysisPage />} />
             <Route path="/simulation" element={<PlaceholderPage />} />
-            <Route path="/actualites" element={<PlaceholderPage />} />
-            <Route path="/parametres" element={<PlaceholderPage />} />
-            <Route path="/aide" element={<PlaceholderPage />} />
+            <Route path="/actualites" element={<ActivitesPage />} />
+            <Route path="/parametres" element={<ParametresPage />} />
+            <Route path="/aide" element={<AidePage />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

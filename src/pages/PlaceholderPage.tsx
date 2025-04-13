@@ -67,8 +67,8 @@ export default function PlaceholderPage() {
         advanceSimulation();
       }, 2000 / speed[0]); // Vitesse de simulation ajustable
       
-      // Stocker l'ID de l'intervalle
-      window.simulationInterval = interval;
+      // Stocker l'ID de l'intervalle - correction du typage ici
+      window.simulationInterval = interval as unknown as number;
     } else {
       // Si on met en pause, effacer l'intervalle
       clearInterval(window.simulationInterval);
