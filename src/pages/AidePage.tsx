@@ -102,7 +102,7 @@ export default function AidePage() {
     },
     {
       id: "4",
-4 title: "Tutoriel vidéo : Utiliser l'outil de simulation",
+      title: "Tutoriel vidéo : Utiliser l'outil de simulation",
       description: "Apprenez à tirer le meilleur parti de l'outil de simulation de MyAgri.",
       type: "video",
       icon: <VideoIcon className="h-5 w-5" />,
